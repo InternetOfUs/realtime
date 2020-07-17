@@ -1,3 +1,4 @@
+from time import time
 from sqlalchemy.orm import Session
 
 from wenet_realtime.realtime_db import models, schemas
@@ -10,15 +11,27 @@ def create_or_update(db: Session, user_location: schemas.UserLocation):
     db.commit()
 
 
-def get_closest(db: Session, location: schemas.Location, max: int = 10):
+def get_closest(db: Session, location: schemas.Location, nb_user_max: int = 10 * 60):
     users_locations = db.query(models.UserLocation).all()
-    return sorted(
-        [
-            (space_distance_m_from_entity(location, user), user)
-            for user in users_locations
-        ],
-        key=lambda x: x[0],
-    )[:max]
+    return dict(
+        sorted(
+            [
+                (user.id, space_distance_m_from_entity(location, user))
+                for user in users_locations
+            ],
+            key=lambda x: x[1],
+        )[:nb_user_max]
+    )
+
+
+def clean_old_records(db: Session, older_than_n_minutes: int = 20):
+    current_ts = int(time())
+    old_records = db.query(models.UserLocation).filter(
+        current_ts - models.UserLocation.timestamp >= older_than_n_minutes
+    )
+    for old_record in old_records:
+        db.delete(old_record)
+    db.commit()
 
 
 def space_distance_m_from_entity(l1: schemas.Location, l2: schemas.Location):
