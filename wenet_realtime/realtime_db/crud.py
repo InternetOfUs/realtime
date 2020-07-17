@@ -34,5 +34,10 @@ def clean_old_records(db: Session, older_than_n_minutes: int = 20):
     db.commit()
 
 
+def delete_all(db: Session):
+    db.query(models.UserLocation).delete()
+    db.commit()
+
+
 def space_distance_m_from_entity(l1: schemas.Location, l2: schemas.Location):
     return space_distance_m(l1.latitude, l1.longitude, l2.latitude, l2.longitude)
