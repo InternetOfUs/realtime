@@ -12,7 +12,7 @@
   build_image:
     stage: build_image
     script:
-      - docker build . -t wenet_realtime
+      - docker build . -t docker.idiap.ch/wenet/wenet_realtime
   push:
    stage: push
    only:
