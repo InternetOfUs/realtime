@@ -1,4 +1,4 @@
-stages:
+  stages:
     - check_docker_exist
     - build_image
     - push
