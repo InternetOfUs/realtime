@@ -15,7 +15,7 @@ with open("requirements.txt", "r") as f:
 
 setuptools.setup(
     name="wenet_realtime",
-    version="0.0.1",
+    version="0.0.2",
     author="Idiap - William Droz",
     author_email="william.droz@idiap.ch",
     description="Realtime APIs for the Wenet project (personal context builder component)",
