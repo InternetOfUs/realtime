@@ -23,6 +23,11 @@ def get_closest(db: Session, location: schemas.Location, nb_user_max: int = 10 *
         )[:nb_user_max]
     )
 
+def get_locations(db: Session, user_ids):
+    res = db.query(models.UserLocation).filter(models.UserLocation.id.in_(user_ids))
+    return [item for item in res]
+
+
 
 def clean_old_records(db: Session, older_than_n_minutes: int = 20):
     current_ts = int(time())
