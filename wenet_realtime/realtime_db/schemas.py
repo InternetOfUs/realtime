@@ -18,3 +18,6 @@ class UserLocation(BaseModel):
 class Location(BaseModel):
     latitude: float
     longitude: float
+
+class UsersList(BaseModel):
+    userids: List[str]
