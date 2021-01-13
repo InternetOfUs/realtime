@@ -2,6 +2,7 @@ import unittest
 
 from fastapi.testclient import TestClient
 from wenet_realtime.app import app
+import json
 
 
 class ClosestAPITestCase(unittest.TestCase):
@@ -20,6 +21,11 @@ class ClosestAPITestCase(unittest.TestCase):
         res = self.client.get("/closest/", params=params)
         first = list(res.json().items())[0][0]
         self.assertEqual(first, "user3")
+
+    def test_get_locations_one(self):
+        res = self.client.post("/locations/", json={"userids": ["user1"]})
+        first = res.json()[0]
+        self.assertEqual(first["latitude"], 0)
 
 
 if __name__ == "__main__":  # pragma: no cover
