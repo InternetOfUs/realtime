@@ -32,7 +32,7 @@ def get_locations(db: Session, user_ids):
 def clean_old_records(db: Session, older_than_n_minutes: int = 20):
     current_ts = int(time())
     old_records = db.query(models.UserLocation).filter(
-        current_ts - models.UserLocation.timestamp >= older_than_n_minutes
+        current_ts - models.UserLocation.timestamp >= (older_than_n_minutes * 60)
     )
     for old_record in old_records:
         db.delete(old_record)
