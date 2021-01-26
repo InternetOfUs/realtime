@@ -5,7 +5,9 @@ from sqlalchemy.orm import Session
 
 from wenet_realtime.realtime_db import crud, models, schemas
 from wenet_realtime.realtime_db.database import SessionLocal, engine
-
+import logging
+from wenet_realtime import config
+from wenet_realtime.wenet_logging import create_ch_handler, create_log_file_handler
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -18,6 +20,17 @@ def get_db():
         yield db
     finally:
         db.close()
+
+    
+@app.on_event("startup")
+async def startup_event():
+    logger = logging.getLogger("uvicorn.access")
+    ch = create_ch_handler()
+    log_file = create_log_file_handler()
+    logger.addHandler(ch)
+    logger.addHandler(log_file)
+
+
 
 
 @app.post("/users_locations/")
