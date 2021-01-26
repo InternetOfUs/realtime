@@ -11,7 +11,7 @@ def create_or_update(db: Session, user_location: schemas.UserLocation):
     db.commit()
 
 
-def get_closest(db: Session, location: schemas.Location, nb_user_max: int = 10 * 60):
+def get_closest(db: Session, location: schemas.Location, nb_user_max: int = 10):
     users_locations = db.query(models.UserLocation).all()
     return dict(
         sorted(
