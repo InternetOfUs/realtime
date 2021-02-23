@@ -31,8 +31,6 @@ async def startup_event():
     logger.addHandler(log_file)
 
 
-
-
 @app.post("/users_locations/")
 def create_user(user: schemas.UserLocation, db: Session = Depends(get_db)):
     crud.create_or_update(db, user)
