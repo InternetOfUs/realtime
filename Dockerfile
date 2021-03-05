@@ -7,6 +7,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY wenet_realtime wenet_realtime
+COPY *.sh .
 
 RUN DEFAULT_DB_URL="sqlite:///:memory:" python3 -m unittest discover -s wenet_realtime
 
