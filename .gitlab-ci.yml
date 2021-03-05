@@ -1,6 +1,7 @@
   stages:
     - check_docker_exist
     - build_image
+    - coverage
     - push
     - push_version
  
@@ -13,6 +14,11 @@
     stage: build_image
     script:
       - docker build . -t docker.idiap.ch/wenet/wenet-realtime
+  coverage:
+    stage: coverage
+    script:
+      - ./docker_run_tests.sh
+
   push:
    stage: push
    only:
