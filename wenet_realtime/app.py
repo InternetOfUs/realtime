@@ -31,12 +31,12 @@ async def startup_event():
     logger.addHandler(log_file)
 
 
-@app.post("/users_locations/")
+@app.post("/users_locations/", tags=["Real-time operations"])
 def create_user(user: schemas.UserLocation, db: Session = Depends(get_db)):
     crud.create_or_update(db, user)
 
 
-@app.post("/locations/", response_model=schemas.LocationsOut)
+@app.post("/locations/", tags=["Real-time operations"], response_model=schemas.LocationsOut)
 def get_locations(user_list: schemas.UsersList, db: Session = Depends(get_db)):
     user_ids = [user_id for user_id in user_list.userids]
     user_locations = crud.get_locations(db, user_ids)
@@ -44,7 +44,7 @@ def get_locations(user_list: schemas.UsersList, db: Session = Depends(get_db)):
     return res
 
 
-@app.get("/closest/", response_model=List[schemas.ClosestRecord])
+@app.get("/closest/", tags=["Real-time operations"], response_model=List[schemas.ClosestRecord])
 def closest_users(
     latitude: float,
     longitude: float,
