@@ -19,7 +19,7 @@ class ClosestAPITestCase(unittest.TestCase):
         params = {"latitude": 10, "longitude": 10}
 
         res = self.client.get("/closest/", params=params)
-        first = list(res.json().items())[0][0]
+        first = list(res.json())[0]["userId"]
         self.assertEqual(first, "user3")
 
     def test_get_locations_one(self):
