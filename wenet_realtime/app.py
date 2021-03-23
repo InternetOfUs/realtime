@@ -36,11 +36,12 @@ def create_user(user: schemas.UserLocation, db: Session = Depends(get_db)):
     crud.create_or_update(db, user)
 
 
-@app.post("/locations/")
+@app.post("/locations/", response_model=schemas.LocationsOut)
 def get_locations(user_list: schemas.UsersList, db: Session = Depends(get_db)):
     user_ids = [user_id for user_id in user_list.userids]
     user_locations = crud.get_locations(db, user_ids)
-    return user_locations
+    res = schemas.LocationsOut(locations=user_locations)
+    return res
 
 
 @app.get("/closest/")
