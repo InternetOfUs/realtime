@@ -25,7 +25,7 @@ def get_closest(db: Session, location: schemas.Location, nb_user_max: int = 10):
 
 def get_locations(db: Session, user_ids):
     res = db.query(models.UserLocation).filter(models.UserLocation.id.in_(user_ids))
-    return [item for item in res]
+    return [schemas.UserLocationOut(userId=item.id, latitude=item.latitude, longitude=item.longitude) for item in res]
 
 
 
