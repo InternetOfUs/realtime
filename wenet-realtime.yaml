@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wenet-realtime-deployment
+  labels:
+    app: wenet
+spec:
+  selector:
+    matchLabels:
+      app: wenet
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: wenet
+    spec:
+      containers:
+      - env:
+        - name: VIRTUAL_HOST_LOCATION
+          valueFrom:
+            configMapKeyRef:
+              key: VIRTUAL_HOST_LOCATION_WENET
+              name: settings-wenet-env
+        - name: VIRTUAL_LOCAL_PATH
+          valueFrom:
+            configMapKeyRef:
+              key: VIRTUAL_LOCAL_PATH_WENET
+              name: settings-wenet-env
+        - name: DEFAULT_LOG_FILE
+          valueFrom:
+            configMapKeyRef:
+              key: DEFAULT_LOG_FILE_WENET
+              name: settings-wenet-env
+        name: wenet
+        image: docker.idiap.ch/wenet/wenet-realtime:latest
+        command: ["uvicorn"]
+        args: ["--host", "0.0.0.0", "--workers", "1", "--root-path", "/devel/hub/wenet", "wenet_realtime.app:app"]
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: 10Gi
+            #cpu: "2"
+          requests:
+            memory: 10Gi
+            #cpu: "2"
+      imagePullSecrets:
+      - name: wenet-realtime-secret
+
+---
+
+apiVersion: v1
+data:
+    VIRTUAL_HOST_LOCATION_WENET: /devel/hub/wenet
+    VIRTUAL_LOCAL_PATH_WENET: /
+    DEFAULT_LOG_FILE_WENET: /var/log/wenet.log
+kind: ConfigMap
+metadata:
+    name: settings-wenet-env
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wenet
+spec:
+  selector:
+    app: wenet
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: wenet
