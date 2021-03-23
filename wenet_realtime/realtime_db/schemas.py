@@ -21,3 +21,11 @@ class Location(BaseModel):
 
 class UsersList(BaseModel):
     userids: List[str]
+
+class UserLocationOut(BaseModel):
+    userId: str
+    longitude: Optional[float] = None
+    latitude: Optional[float] = None
+
+class LocationsOut(BaseModel):
+    locations: Optional[List[UserLocationOut]] = None
