@@ -44,7 +44,7 @@ def get_locations(user_list: schemas.UsersList, db: Session = Depends(get_db)):
     return res
 
 
-@app.get("/closest/")
+@app.get("/closest/", response_model=List[schemas.ClosestRecord])
 def closest_users(
     latitude: float,
     longitude: float,
@@ -52,7 +52,11 @@ def closest_users(
     db: Session = Depends(get_db),
 ):
     crud.clean_old_records(db)
-    return crud.get_closest(
+    crud_res = crud.get_closest(
         db, schemas.Location(latitude=latitude, longitude=longitude), nb_user_max
     )
+    res = list()
+    for k, v in crud_res.items():
+        res.append(schemas.ClosestRecord(userId=k, distance=v))
+    return res
 
