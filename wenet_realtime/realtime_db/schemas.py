@@ -22,6 +22,10 @@ class Location(BaseModel):
 class UsersList(BaseModel):
     userids: List[str]
 
+class ClosestRecord(BaseModel):
+    userId: str
+    distance: float
+
 class UserLocationOut(BaseModel):
     userId: str
     longitude: Optional[float] = None
