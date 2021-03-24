@@ -31,7 +31,7 @@ spec:
             configMapKeyRef:
               key: DEFAULT_LOG_FILE_WENET
               name: settings-wenet-env
-        name: wenet
+        name: wenet-realtime
         image: docker.idiap.ch/wenet/wenet-realtime:latest
         command: ["uvicorn"]
         args: ["--host", "0.0.0.0", "--workers", "1", "--root-path", "/devel/hub/wenet", "wenet_realtime.app:app"]
@@ -62,7 +62,7 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wenet
+  name: wenet-realtime-svc
 spec:
   selector:
     app: wenet
