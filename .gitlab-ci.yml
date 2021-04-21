@@ -26,6 +26,10 @@
    script:
       - echo $CI_JOB_TOKEN | docker login docker.idiap.ch -u gitlab-ci-token --password-stdin
       - docker push docker.idiap.ch/wenet/wenet-realtime:latest
+      - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+      - docker tag docker.idiap.ch/wenet/wenet-realtime:latest internetofus/wenet-realtime:latest
+      - docker push internetofus/wenet-realtime:latest
+
   push_version:
    stage: push_version
    only:
@@ -34,4 +38,8 @@
       - echo $CI_JOB_TOKEN | docker login docker.idiap.ch -u gitlab-ci-token --password-stdin
       - docker tag  docker.idiap.ch/wenet/wenet-realtime:latest docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG
       - docker push docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG
+      - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+      - docker tag docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG internetofus/wenet-realtime:$CI_COMMIT_TAG
+      - docker push internetofus/wenet-realtime:$CI_COMMIT_TAG
+
  
