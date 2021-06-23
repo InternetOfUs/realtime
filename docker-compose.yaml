@@ -1,0 +1,8 @@
+version: '3'
+services:
+  wenet-realtime-api:
+    container_name: wenet-realtime-api
+    image: 'internetofus/wenet-realtime:latest'
+    ports:
+        - "8000:8000"
+   
