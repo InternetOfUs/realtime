@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
@@ -49,6 +49,7 @@ def closest_users(
     latitude: float,
     longitude: float,
     nb_user_max: int = 10,
+    radius : Optional[int] = None,
     db: Session = Depends(get_db),
 ):
     crud.clean_old_records(db)
@@ -57,6 +58,7 @@ def closest_users(
     )
     res = list()
     for k, v in crud_res.items():
-        res.append(schemas.ClosestRecord(userId=k, distance=v))
+        if radius is None or v < radius:
+            res.append(schemas.ClosestRecord(userId=k, distance=v))
     return res
 
