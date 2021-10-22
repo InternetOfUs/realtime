@@ -1,61 +1,61 @@
-  image: tiangolo/docker-with-compose
-  stages:
-    - check_docker_exist
-    - build_image
-    - coverage
-    - push
-    - push_version
+image: tiangolo/docker-with-compose
+stages:
+  - check_docker_exist
+  - build_image
+  - coverage
+  - push
+  - push_version
 
-  variables:
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
 
- 
-  check_docker_exist:
-    tags:
-      - no-bob
-    stage: check_docker_exist
-    script:
-      - docker info
- 
-  build_image:
-    tags:
-      - no-bob
-    stage: build_image
-    script:
-      - docker build . -t docker.idiap.ch/wenet/wenet-realtime
-  coverage:
-    tags:
-      - no-bob
-    stage: coverage
-    script:
-      - ./docker_run_tests.sh
 
-  push:
-    tags:
-      - no-bob
-   stage: push
-   only:
-      - master
-   script:
-      - echo $CI_JOB_TOKEN | docker login docker.idiap.ch -u gitlab-ci-token --password-stdin
-      - docker push docker.idiap.ch/wenet/wenet-realtime:latest
-      - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
-      - docker tag docker.idiap.ch/wenet/wenet-realtime:latest internetofus/wenet-realtime:latest
-      - docker push internetofus/wenet-realtime:latest
+check_docker_exist:
+  tags:
+    - no-bob
+  stage: check_docker_exist
+  script:
+    - docker info
 
-  push_version:
-    tags:
-      - no-bob
-   stage: push_version
-   only:
-      - tags
-   script:
-      - echo $CI_JOB_TOKEN | docker login docker.idiap.ch -u gitlab-ci-token --password-stdin
-      - docker tag  docker.idiap.ch/wenet/wenet-realtime:latest docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG
-      - docker push docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG
-      - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
-      - docker tag docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG internetofus/wenet-realtime:$CI_COMMIT_TAG
-      - docker push internetofus/wenet-realtime:$CI_COMMIT_TAG
+build_image:
+  tags:
+    - no-bob
+  stage: build_image
+  script:
+    - docker build . -t docker.idiap.ch/wenet/wenet-realtime
+coverage:
+  tags:
+    - no-bob
+  stage: coverage
+  script:
+    - ./docker_run_tests.sh
+
+push:
+  tags:
+    - no-bob
+  stage: push
+  only:
+    - master
+  script:
+    - echo $CI_JOB_TOKEN | docker login docker.idiap.ch -u gitlab-ci-token --password-stdin
+    - docker push docker.idiap.ch/wenet/wenet-realtime:latest
+    - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+    - docker tag docker.idiap.ch/wenet/wenet-realtime:latest internetofus/wenet-realtime:latest
+    - docker push internetofus/wenet-realtime:latest
+
+push_version:
+  tags:
+    - no-bob
+  stage: push_version
+  only:
+    - tags
+  script:
+    - echo $CI_JOB_TOKEN | docker login docker.idiap.ch -u gitlab-ci-token --password-stdin
+    - docker tag  docker.idiap.ch/wenet/wenet-realtime:latest docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG
+    - docker push docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG
+    - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+    - docker tag docker.idiap.ch/wenet/wenet-realtime:$CI_COMMIT_TAG internetofus/wenet-realtime:$CI_COMMIT_TAG
+    - docker push internetofus/wenet-realtime:$CI_COMMIT_TAG
 
  
