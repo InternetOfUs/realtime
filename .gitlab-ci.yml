@@ -1,25 +1,39 @@
+  image: tiangolo/docker-with-compose
   stages:
     - check_docker_exist
     - build_image
     - coverage
     - push
     - push_version
+
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+
  
   check_docker_exist:
+    tags:
+      - no-bob
     stage: check_docker_exist
     script:
       - docker info
  
   build_image:
+    tags:
+      - no-bob
     stage: build_image
     script:
       - docker build . -t docker.idiap.ch/wenet/wenet-realtime
   coverage:
+    tags:
+      - no-bob
     stage: coverage
     script:
       - ./docker_run_tests.sh
 
   push:
+    tags:
+      - no-bob
    stage: push
    only:
       - master
@@ -31,6 +45,8 @@
       - docker push internetofus/wenet-realtime:latest
 
   push_version:
+    tags:
+      - no-bob
    stage: push_version
    only:
       - tags
