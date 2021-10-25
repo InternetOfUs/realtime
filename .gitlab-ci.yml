@@ -13,27 +13,31 @@ variables:
 
 check_docker_exist:
   tags:
-    - no-bob
+    - docker
+    - linux
   stage: check_docker_exist
   script:
     - docker info
 
 build_image:
   tags:
-    - no-bob
+    - docker
+    - linux
   stage: build_image
   script:
     - docker build . -t docker.idiap.ch/wenet/wenet-realtime
 coverage:
   tags:
-    - no-bob
+    - docker
+    - linux
   stage: coverage
   script:
     - ./docker_run_tests.sh
 
 push:
   tags:
-    - no-bob
+    - docker
+    - linux
   stage: push
   only:
     - master
@@ -46,7 +50,8 @@ push:
 
 push_version:
   tags:
-    - no-bob
+    - docker
+    - linux
   stage: push_version
   only:
     - tags
