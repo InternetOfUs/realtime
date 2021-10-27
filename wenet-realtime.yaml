@@ -34,7 +34,7 @@ spec:
         name: wenet
         image: docker.idiap.ch/wenet/wenet-realtime:latest
         command: ["uvicorn"]
-        args: ["--host", "0.0.0.0", "--timeout-keep-alive", "300", "--limit-max-requests", "1000", "--workers", "1", "--root-path", "/devel/hub/wenet", "wenet_realtime.app:app"]
+        args: ["--host", "0.0.0.0", "--timeout-keep-alive", "300", "--limit-max-requests", "5000", "--workers", "1", "--root-path", "/devel/hub/wenet", "wenet_realtime.app:app"]
         ports:
         - containerPort: 80
         resources:
