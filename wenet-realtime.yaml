@@ -33,6 +33,10 @@ spec:
               name: settings-wenet-env
         name: wenet
         image: docker.idiap.ch/wenet/wenet-realtime:latest
+        volumeMounts:
+          - name: tz-zurich
+            mountPath: /etc/localtime
+
         command: ["uvicorn"]
         args: ["--host", "0.0.0.0", "--timeout-keep-alive", "300", "--limit-max-requests", "5000", "--workers", "1", "--root-path", "/devel/hub/wenet", "wenet_realtime.app:app"]
         ports:
@@ -46,6 +50,11 @@ spec:
             #cpu: "2"
       imagePullSecrets:
       - name: wenet-realtime-secret
+      volumes:
+      - name: tz-zurich
+        hostPath:
+          path: /usr/share/zoneinfo/Europe/Zurich
+
 ---
 
 apiVersion: v1
