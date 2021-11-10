@@ -52,8 +52,8 @@ def closest_users(
     radius : Optional[int] = None,
     db: Session = Depends(get_db),
 ):
-    #  HACK TODO REMOVE
-    #  crud.clean_old_records(db)
+    if not config.DEFAULT_KEEP_OLD_RECORDS:
+        crud.clean_old_records(db)
     crud_res = crud.get_closest(
         db, schemas.Location(latitude=latitude, longitude=longitude), nb_user_max
     )
