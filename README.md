@@ -21,3 +21,7 @@ Local server can be run with
 ## Docs
 
 On the route */docs* once the server is running
+
+## Misc
+
+This repository is mirroired from gitlab to github
