@@ -33,6 +33,9 @@ coverage:
   stage: coverage
   script:
     - ./docker_run_tests.sh
+  artifacts:
+    reports:
+      cobertura: coverage.xml
 
 push:
   tags:
