@@ -18,7 +18,7 @@ def space_distance_m(lat1, lng1, lat2, lng2):
     lng1 = radians(lng1)
     lat2 = radians(lat2)
     lng2 = radians(lng2)
-
+    print("test")
     dlon = lng2 - lng1
     dlat = lat2 - lat1
     a = (sin(dlat / 2)) ** 2 + cos(lat1) * cos(lat2) * (sin(dlon / 2)) ** 2
