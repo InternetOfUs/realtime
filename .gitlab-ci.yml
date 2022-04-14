@@ -2,9 +2,9 @@ image: tiangolo/docker-with-compose
 stages:
   - check_docker_exist
   - build_image
-  - coverage
   - push
   - push_version
+  - coverage
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -27,12 +27,13 @@ build_image:
   script:
     - docker build . -t docker.idiap.ch/wenet/wenet-realtime
 coverage:
+  image: docker.idiap.ch/wenet/wenet-realtime
   tags:
     - docker
     - linux
   stage: coverage
   script:
-    - ./docker_run_tests.sh
+    - ./run_tests.sh
   artifacts:
     reports:
       cobertura: coverage.xml
