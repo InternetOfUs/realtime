@@ -8,6 +8,7 @@ from wenet_realtime.realtime_db.database import SessionLocal, engine
 import logging
 from wenet_realtime import config
 from wenet_realtime.wenet_logging import create_ch_handler, create_log_file_handler
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -21,7 +22,7 @@ def get_db():
     finally:
         db.close()
 
-    
+
 @app.on_event("startup")
 async def startup_event():
     logger = logging.getLogger("uvicorn.access")
@@ -36,7 +37,9 @@ def create_user(user: schemas.UserLocation, db: Session = Depends(get_db)):
     crud.create_or_update(db, user)
 
 
-@app.post("/locations/", tags=["Real-time operations"], response_model=schemas.LocationsOut)
+@app.post(
+    "/locations/", tags=["Real-time operations"], response_model=schemas.LocationsOut
+)
 def get_locations(user_list: schemas.UsersList, db: Session = Depends(get_db)):
     user_ids = [user_id for user_id in user_list.userids]
     user_locations = crud.get_locations(db, user_ids)
@@ -44,12 +47,16 @@ def get_locations(user_list: schemas.UsersList, db: Session = Depends(get_db)):
     return res
 
 
-@app.get("/closest/", tags=["Real-time operations"], response_model=List[schemas.ClosestRecord])
+@app.get(
+    "/closest/",
+    tags=["Real-time operations"],
+    response_model=List[schemas.ClosestRecord],
+)
 def closest_users(
     latitude: float,
     longitude: float,
     nb_user_max: int = 10,
-    radius : Optional[int] = None,
+    radius: Optional[int] = None,
     db: Session = Depends(get_db),
 ):
     if not config.DEFAULT_KEEP_OLD_RECORDS:
@@ -62,4 +69,3 @@ def closest_users(
         if radius is None or v < radius:
             res.append(schemas.ClosestRecord(userId=k, distance=v))
     return res
-

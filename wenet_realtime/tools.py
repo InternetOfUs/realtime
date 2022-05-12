@@ -2,7 +2,7 @@ from math import sin, cos, sqrt, atan2, radians
 
 
 def space_distance_m(lat1, lng1, lat2, lng2):
-    """ Compute the spatial distance in meters
+    """Compute the spatial distance in meters
 
     Args:
         lat1: first point latitude

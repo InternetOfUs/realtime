@@ -2,6 +2,7 @@ from wenet_realtime import config
 import logging
 import logging.handlers
 
+
 def create_ch_handler():
     formatter = logging.Formatter(config.DEFAULT_LOGGER_FORMAT)
     ch = logging.StreamHandler()
@@ -17,8 +18,7 @@ def create_log_file_handler():
 
 
 def create_logger(name="wenet-undefined"):
-    """ create a logger with the correct configuration
-    """
+    """create a logger with the correct configuration"""
 
     logger = logging.getLogger(name)
     logger.setLevel(config.DEFAULT_LOGGER_LEVEL)
