@@ -1,6 +1,7 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, TIMESTAMP, Float
-from sqlalchemy.orm import relationship
 from time import time
+
+from sqlalchemy import TIMESTAMP, Boolean, Column, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 from wenet_realtime.realtime_db.database import Base
 

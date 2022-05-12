@@ -1,12 +1,12 @@
+import logging
 from typing import List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
+from wenet_realtime import config
 from wenet_realtime.realtime_db import crud, models, schemas
 from wenet_realtime.realtime_db.database import SessionLocal, engine
-import logging
-from wenet_realtime import config
 from wenet_realtime.wenet_logging import create_ch_handler, create_log_file_handler
 
 models.Base.metadata.create_all(bind=engine)

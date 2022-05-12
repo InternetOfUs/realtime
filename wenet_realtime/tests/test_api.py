@@ -1,8 +1,9 @@
+import json
 import unittest
 
 from fastapi.testclient import TestClient
+
 from wenet_realtime.app import app
-import json
 
 
 class ClosestAPITestCase(unittest.TestCase):

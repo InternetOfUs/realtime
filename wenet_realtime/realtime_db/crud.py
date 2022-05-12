@@ -1,4 +1,5 @@
 from time import time
+
 from sqlalchemy.orm import Session
 
 from wenet_realtime.realtime_db import models, schemas

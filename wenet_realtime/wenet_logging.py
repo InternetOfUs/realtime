@@ -1,6 +1,7 @@
-from wenet_realtime import config
 import logging
 import logging.handlers
+
+from wenet_realtime import config
 
 
 def create_ch_handler():
