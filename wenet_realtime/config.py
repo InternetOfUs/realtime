@@ -22,3 +22,4 @@ def _update_parameters_from_env():
                     )
                 )
                 globals()[k] = new_v
+_update_parameters_from_env()
