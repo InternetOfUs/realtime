@@ -2,9 +2,8 @@ import logging
 from typing import List, Optional
 
 import sentry_sdk
-from sentry_sdk.integrations.logging import EventHandler
-
 from fastapi import Depends, FastAPI, HTTPException
+from sentry_sdk.integrations.logging import EventHandler
 from sqlalchemy.orm import Session
 
 from wenet_realtime import config
