@@ -8,6 +8,8 @@ DEFAULT_DB_URL = "sqlite:///./sql_app.db"
 DEFAULT_LOGGER_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 DEFAULT_LOG_FILE = "wenet_realtime.log"
 DEFAULT_KEEP_OLD_RECORDS = True
+DEFAULT_WENET_SENTRY_KEY = ""
+DEFAULT_ENV = "dev"
 
 
 def _update_parameters_from_env():
