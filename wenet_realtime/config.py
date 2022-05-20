@@ -11,6 +11,7 @@ DEFAULT_WENET_SENTRY_KEY = ""
 DEFAULT_ENV = "dev"
 DEFAULT_LOGGER_FORMAT = "[{}] %(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
+
 def _update_parameters_from_env():
     """update the config values from env"""
     for k, v in globals().items():
@@ -24,10 +25,12 @@ def _update_parameters_from_env():
                 )
                 globals()[k] = new_v
 
+
 def _update_fill_env():  # pragma: no cover
     envs = ["DEFAULT_LOGGER_FORMAT"]
     for env in envs:
         globals()[env] = globals()[env].format(DEFAULT_ENV)
+
 
 _update_parameters_from_env()
 _update_fill_env()

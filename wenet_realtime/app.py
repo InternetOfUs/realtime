@@ -41,7 +41,6 @@ async def startup_event():
         logger.addHandler(sentry_handler)
 
 
-
 @app.post("/users_locations/", tags=["Real-time operations"])
 def create_user(user: schemas.UserLocation, db: Session = Depends(get_db)):
     crud.create_or_update(db, user)
