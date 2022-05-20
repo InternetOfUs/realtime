@@ -1,6 +1,9 @@
 import logging
 from typing import List, Optional
 
+import sentry_sdk
+from sentry_sdk.integrations.logging import EventHandler
+
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
@@ -30,6 +33,13 @@ async def startup_event():
     log_file = create_log_file_handler()
     logger.addHandler(ch)
     logger.addHandler(log_file)
+    if config.DEFAULT_WENET_SENTRY_KEY != "" and config.DEFAULT_ENV != "dev":
+        sentry_sdk.init(config.DEFAULT_WENET_SENTRY_KEY)
+        sentry_handler = EventHandler()
+        formatter = logging.Formatter(config.DEFAULT_LOGGER_FORMAT)
+        sentry_handler.formatter = formatter
+        logger.addHandler(sentry_handler)
+
 
 
 @app.post("/users_locations/", tags=["Real-time operations"])
