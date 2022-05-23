@@ -9,6 +9,7 @@ DEFAULT_LOG_FILE = "wenet_realtime.log"
 DEFAULT_KEEP_OLD_RECORDS = True
 DEFAULT_WENET_SENTRY_KEY = ""
 DEFAULT_ENV = "dev"
+DEFAULT_NONDEV_PREFIX = "/{}/realtime_api/"
 DEFAULT_LOGGER_FORMAT = "[{}] %(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
 
@@ -27,7 +28,7 @@ def _update_parameters_from_env():
 
 
 def _update_fill_env():  # pragma: no cover
-    envs = ["DEFAULT_LOGGER_FORMAT"]
+    envs = ["DEFAULT_LOGGER_FORMAT", "DEFAULT_NONDEV_PREFIX"]
     for env in envs:
         globals()[env] = globals()[env].format(DEFAULT_ENV)
 
