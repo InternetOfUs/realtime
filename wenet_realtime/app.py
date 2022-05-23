@@ -13,7 +13,7 @@ from wenet_realtime.wenet_logging import create_ch_handler, create_log_file_hand
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(root_path="/" if config.DEFAULT_ENV == "dev" else config.DEFAULT_NONDEV_PREFIX)
 
 
 # Dependency
