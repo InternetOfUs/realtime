@@ -15,22 +15,9 @@ spec:
         app: wenet
     spec:
       containers:
-      - env:
-        - name: VIRTUAL_HOST_LOCATION
-          valueFrom:
-            configMapKeyRef:
-              key: VIRTUAL_HOST_LOCATION_WENET
-              name: settings-wenet-env
-        - name: VIRTUAL_LOCAL_PATH
-          valueFrom:
-            configMapKeyRef:
-              key: VIRTUAL_LOCAL_PATH_WENET
-              name: settings-wenet-env
-        - name: DEFAULT_LOG_FILE
-          valueFrom:
-            configMapKeyRef:
-              key: DEFAULT_LOG_FILE_WENET
-              name: settings-wenet-env
+      - envFrom:
+        - configMapRef:
+          name: settings-wenet-env
         name: wenet
         image: docker.idiap.ch/wenet/wenet-realtime:latest
         volumeMounts:
