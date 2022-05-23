@@ -48,7 +48,7 @@ apiVersion: v1
 data:
     VIRTUAL_HOST_LOCATION_WENET: /devel/hub/wenet
     VIRTUAL_LOCAL_PATH_WENET: /
-    DEFAULT_LOG_FILE_WENET: /var/log/wenet.log
+    DEFAULT_LOG_FILE: /var/log/wenet.log
 kind: ConfigMap
 metadata:
     name: settings-wenet-env
