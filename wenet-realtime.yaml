@@ -17,7 +17,7 @@ spec:
       containers:
       - envFrom:
         - configMapRef:
-          name: settings-wenet-env
+            name: settings-wenet-realtime-env
         name: wenet
         image: docker.idiap.ch/wenet/wenet-realtime:latest
         volumeMounts:
@@ -51,7 +51,7 @@ data:
     DEFAULT_LOG_FILE: /var/log/wenet.log
 kind: ConfigMap
 metadata:
-    name: settings-wenet-env
+    name: settings-wenet-realtime-env
 
 ---
 apiVersion: v1
